@@ -1,0 +1,107 @@
+﻿@using Lab5.Controllers
+@using Lab5.Models
+
+@{
+    Layout = null;
+
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>GalleryDetailsLogedIn</title>
+    <link rel="stylesheet" type="text/css" href="~/Content/StyleSheet.css" />
+   
+</head>
+<body>
+    
+
+<div class="Container">
+    @{
+        var gallery = (GALLERY_LIST) ViewBag.Gallery;
+        <h2 class="headline">@gallery.Gallery_Name</h2>
+        using (Html.BeginForm("Upload", "Home", FormMethod.Post, new {enctype = "multipart/form-data"}))
+        {
+            <label class="label">Image tooltip:</label>
+            <input type="text" value="" name="tooltip"/>
+            <input type="hidden" value="@gallery.ID" name="gallID"/>
+            <input type="hidden" value="@gallery.Gallery_Name" name="gName"/>
+            <input type="file" name="upload" accept="image/*"/>
+            <br>
+            <input type="submit"  value="Add image"/>
+        }
+    }
+
+</div>
+<div style="margin: 20px 0px;">
+    <table style="margin: 5px">
+        <tr>
+            @foreach (PICTURE_LIST img in ViewBag.Imgs)
+            {
+                <td class="label">@img.Picture_Number</td>
+
+                <td>
+                    <form action="@Url.Action("PictureDetails", "Home")" method="get">
+                        <input type="image"  src="/Resources/PhotoStorage/@gallery.ID/@img.Mini_Version" title="@img.Description"/>
+                        <input type="hidden" value="@img.Picture_Number" name="picNUM"/>
+
+                        <input type="hidden" value="@gallery.Gallery_Name" name="gName"/>
+                        <input type="hidden" value="@gallery.ID" name="gID"/>
+                    </form>
+                </td>
+
+
+                <td>
+                    <form action="@Url.Action("ChangePicture", "Home")" method="post">
+                        <input type="hidden" value="@ChangeAction.Up" name="action"/>
+                        <input type="hidden" value="@img.ID" name="picID"/>
+                        <input type="submit"  value="Up"/>
+                        <input type="hidden" value="@gallery.Gallery_Name" name="gName"/>
+                        <input type="hidden" value="@gallery.ID" name="gID"/>
+                    </form>
+
+
+
+
+                    <form action="@Url.Action("ChangePicture", "Home")" method="post">
+                        <input type="hidden" value="@ChangeAction.Down" name="action"/>
+                        <input type="hidden" value="@img.ID" name="picID"/>
+                        <input type="submit"  value="Down"/>
+                        <input type="hidden" value="@gallery.Gallery_Name" name="gName"/>
+                        <input type="hidden" value="@gallery.ID" name="gID"/>
+                    </form>
+
+                    <form action="@Url.Action("ChangePicture", "Home")" method="post">
+                        <input type="hidden" value="@ChangeAction.Delete" name="action"/>
+                        <input type="hidden" value="@img.ID" name="picID"/>
+                        <input type="submit"  value="Delete"/>
+                        <input type="hidden" value="@gallery.Gallery_Name" name="gName"/>
+                        <input type="hidden" value="@gallery.ID" name="gID"/>
+                    </form>
+
+                </td>
+
+
+            }
+
+
+        </tr>
+
+    </table>
+    <form action="@Url.Action("IndexLoggedIn", "Home")" method="get">
+        <input type="submit" onclick="hideButton()" value="Back">
+    </form>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+

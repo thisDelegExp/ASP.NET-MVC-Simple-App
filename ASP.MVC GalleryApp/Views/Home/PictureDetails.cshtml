@@ -1,0 +1,62 @@
+﻿@using Lab5.Models
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PictureDetails</title>
+    <link rel="stylesheet" type="text/css" href="~/Content/StyleSheet.css" />
+    
+</head>
+<body>
+ 
+<div>
+    @{
+        var img = (ViewBag.Picture as PICTURE_LIST);
+        bool prevDis = false, nextDis = false;
+        var gallery = (ViewBag.Gallery as GALLERY_LIST);
+        var INDs = ViewBag.ValidINDs as List<int>;
+
+    }
+    <img src="/Resources/PhotoStorage/@img.Gallery_ID/@img.Full_Version"/>
+    <form action="@Url.Action("PictureDetails", "Home")" method="get">
+        <fieldset style="border: none">
+            <input type="hidden" value="@ViewBag.PrevURL" name="prevUrl"/>
+            <input type="hidden" value="@gallery.ID" name="gID"/>
+            @if (!INDs.Contains(img.Picture_Number + 1))
+            {
+                nextDis = true;
+            }
+            @if (!INDs.Contains(img.Picture_Number - 1))
+            {
+                prevDis = true;
+            }
+
+
+            <input type="image"  style="border-radius: 30px;" id="navPrev" src="\Resources\ViewRes\navArrowLeft.png" value="@(img.Picture_Number - 1)" title="Previous" name="picNum" width="100" height="100" disabled="@prevDis"/>
+            <input type="image"  style="border-radius: 30px;" id="navNext" src="\Resources\ViewRes\navArrowRight.png" value="@(img.Picture_Number + 1)" title="Next" name="picNum" width="100" height="100" disabled="@nextDis"/>
+        </fieldset>
+    </form>
+
+    <form action="@ViewBag.PrevURL" method="get">
+        <input type="hidden" value="@gallery.Gallery_Name" name="gName"/>
+        <input type="submit" onclick="hideButton()" value="Back to gallery overview"/>
+        <label class="label">URL:</label>
+        <input type="text" value="@Request.Url.AbsoluteUri" size="60" readonly>
+    </form>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+

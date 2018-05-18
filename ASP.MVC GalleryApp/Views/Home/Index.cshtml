@@ -1,0 +1,88 @@
+﻿@using Lab5.Models
+@{
+    
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Home</title>
+    <link rel="stylesheet" type="text/css" href="~/Content/StyleSheet.css" />
+</head>
+<body>
+    
+<div class="Container">
+    <h3 class="headline">Galleries</h3>
+    <div>
+        @foreach (var b in ViewBag.Galleries)
+        {
+            var gall = (GALLERY_LIST) b;
+
+            <form action="@Url.Action("GalleryDetails", "Home")" method="get">
+                <fieldset style="border: none">
+
+                    <div style="display: flex; flex-direction: row">
+                        <p class="gName">@gall.Gallery_Name</p>
+                        <input type="submit" value="Open"/>
+                        <input type="hidden" value="@gall.Gallery_Name" name="gName"/>
+                    </div>
+
+
+                </fieldset>
+
+            </form>
+        }
+    </div>
+    <div>
+        <form action="@Url.Action("LogIn", "Home")" method="post">
+            <fieldset>
+                <text class="label">Login:</text>
+                <input type="text" name="login" value=""/>
+
+                <text class="label"> Password:</text>
+                <input type="password" name="pass" value=""/>
+                <input type="submit"  name="login" value="Log In"/>
+
+                @if (ViewBag.Error != null)
+                {
+
+                    <span class="errorMsg">@ViewBag.Error</span>
+
+
+                }
+
+            </fieldset>
+
+
+
+        </form>
+    </div>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,55 @@
+﻿@using Lab5.Models
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>GalleryDetails</title>
+    <link rel="stylesheet" type="text/css" href="~/Content/StyleSheet.css" />
+    
+</head>
+<body>
+
+<div class="Container">
+    @{
+        var gallery = (GALLERY_LIST) ViewBag.Gallery;
+        <h2 class="headline" style="text-align: center">@gallery.Gallery_Name</h2>
+    }
+</div>
+<div>
+    <table class="Container">
+        <tr>
+            @foreach (PICTURE_LIST img in ViewBag.Imgs)
+            {
+                <td>
+
+                    <form action="@Url.Action("PictureDetails", "Home")" method="get">
+                        <fieldset>
+                            <input type="image"  src="/Resources/PhotoStorage/@gallery.ID/@img.Mini_Version" title="@img.Description"/>
+
+                            <input type="hidden" value="@img.Picture_Number" name="picNUM"/>
+                            <input type="hidden" value="@gallery.ID" name="gID"/>
+                        </fieldset>
+
+                    </form>
+                </td>
+            }
+        </tr>
+
+    </table>
+    <form action="Index" method="get">
+
+        <input type="submit"  value="Back">
+    </form>
+</div>
+</body>
+</html>
+
+
+
+
+
+

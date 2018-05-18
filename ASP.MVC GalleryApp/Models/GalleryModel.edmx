@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище GalleryDBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GALLERY_LIST">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Gallery_Number" Type="int" Nullable="false" />
+          <Property Name="Gallery_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PICTURE_LIST">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Gallery_ID" Type="int" Nullable="false" />
+          <Property Name="Picture_Number" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Mini-Version" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Full-Version" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_PICTURE_LIST_GALLERY_LIST">
+          <End Role="GALLERY_LIST" Type="Self.GALLERY_LIST" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PICTURE_LIST" Type="Self.PICTURE_LIST" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GALLERY_LIST">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PICTURE_LIST">
+              <PropertyRef Name="Gallery_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище GalleryDBModelContainer">
+          <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GALLERY_LIST" EntityType="Self.GALLERY_LIST" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PICTURE_LIST" EntityType="Self.PICTURE_LIST" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_PICTURE_LIST_GALLERY_LIST" Association="Self.FK_PICTURE_LIST_GALLERY_LIST">
+            <End Role="GALLERY_LIST" EntitySet="GALLERY_LIST" />
+            <End Role="PICTURE_LIST" EntitySet="PICTURE_LIST" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GalleryDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Account">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GALLERY_LIST">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Gallery_Number" Type="Int32" Nullable="false" />
+          <Property Name="Gallery_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="PICTURE_LIST" Relationship="Self.FK_PICTURE_LIST_GALLERY_LIST" FromRole="GALLERY_LIST" ToRole="PICTURE_LIST" />
+        </EntityType>
+        <EntityType Name="PICTURE_LIST">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Gallery_ID" Type="Int32" Nullable="false" />
+          <Property Name="Picture_Number" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Mini_Version" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Full_Version" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="GALLERY_LIST" Relationship="Self.FK_PICTURE_LIST_GALLERY_LIST" FromRole="PICTURE_LIST" ToRole="GALLERY_LIST" />
+        </EntityType>
+        <Association Name="FK_PICTURE_LIST_GALLERY_LIST">
+          <End Role="GALLERY_LIST" Type="Self.GALLERY_LIST" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PICTURE_LIST" Type="Self.PICTURE_LIST" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GALLERY_LIST">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="PICTURE_LIST">
+              <PropertyRef Name="Gallery_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="GalleryDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Account" EntityType="Self.Account" />
+          <EntitySet Name="GALLERY_LIST" EntityType="Self.GALLERY_LIST" />
+          <EntitySet Name="PICTURE_LIST" EntityType="Self.PICTURE_LIST" />
+          <AssociationSet Name="FK_PICTURE_LIST_GALLERY_LIST" Association="Self.FK_PICTURE_LIST_GALLERY_LIST">
+            <End Role="GALLERY_LIST" EntitySet="GALLERY_LIST" />
+            <End Role="PICTURE_LIST" EntitySet="PICTURE_LIST" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище GalleryDBModelContainer" CdmEntityContainer="GalleryDBEntities">
+          <EntitySetMapping Name="Account">
+            <EntityTypeMapping TypeName="GalleryDBModel.Account">
+              <MappingFragment StoreEntitySet="Account">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GALLERY_LIST">
+            <EntityTypeMapping TypeName="GalleryDBModel.GALLERY_LIST">
+              <MappingFragment StoreEntitySet="GALLERY_LIST">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Gallery_Number" ColumnName="Gallery_Number" />
+                <ScalarProperty Name="Gallery_Name" ColumnName="Gallery_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PICTURE_LIST">
+            <EntityTypeMapping TypeName="GalleryDBModel.PICTURE_LIST">
+              <MappingFragment StoreEntitySet="PICTURE_LIST">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Gallery_ID" ColumnName="Gallery_ID" />
+                <ScalarProperty Name="Picture_Number" ColumnName="Picture_Number" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Mini_Version" ColumnName="Mini-Version" />
+                <ScalarProperty Name="Full_Version" ColumnName="Full-Version" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

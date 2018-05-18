@@ -1,0 +1,84 @@
+﻿body {
+    background-color: bisque;
+
+}
+
+.Container {
+    margin: 20px;
+    background-color: beige;
+    outline-color: dimgrey;
+    outline-style: solid;
+    box-shadow: 10px 4px 10px 3px #888;
+}
+
+.headline {
+    font-size: 30px;
+    text-transform: capitalize;
+    margin: 15px;
+    font-family: "Times New Roman";
+    color: sienna;
+    
+    
+}
+
+.label {
+    font-size: 20px;
+    margin: 13px;
+    font-family: "Times New Roman";
+    color: black;
+   
+}
+
+input[type=text] , input[type=password] {
+    border-radius: 2px;
+    padding: 0;
+    height: 30px;
+    position: relative;
+    left: 0;
+    outline: none;
+    border: 1px solid #cdcdcd;
+    border-color: rgb(0,0,0);
+    background-color: white;
+    font-size: 16px;
+}
+
+input[type=submit], button ,input[type=file] {
+    border-radius: 5px;
+    box-shadow: 4px 1px 3px #666666;
+    font-family: Courier New;
+    color: #2e122e;
+    font-size: 16px;
+    padding: 5px 9px 5px 9px;
+    border: solid #2c3033 1px;
+    text-decoration: none;
+    margin: 10px;
+}
+
+.gName {
+    font-size: 20px;
+    font-family: "Times New Roman";
+    color: black;
+    text-transform: capitalize;
+}
+
+.errorMsg {
+    font-size: 16px;
+    margin: 3px;
+    color: red;
+    text-transform: capitalize;
+}
+
+.list {
+    border:none;
+   
+}
+
+input[type=image], img {
+    background-color: aliceblue;
+    border-color: cornsilk;
+    border-style: solid;
+}
+
+
+
+

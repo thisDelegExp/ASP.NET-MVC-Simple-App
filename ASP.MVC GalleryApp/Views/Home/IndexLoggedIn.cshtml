@@ -1,0 +1,88 @@
+﻿@using Lab5.Controllers
+@using Lab5.Models
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>IndexLoggedIn</title>
+    <link rel="stylesheet" type="text/css" href="~/Content/StyleSheet.css" />
+    
+</head>
+<body>
+   
+<div class="Container">
+    <h3 class="headline">Galleries</h3>
+    <div>
+        <table>
+
+            @foreach (var b in ViewBag.Galleries)
+            {
+
+
+                var gall = (GALLERY_LIST) b;
+
+                <tr>
+                    <td>
+                        <p class="label">@gall.Gallery_Number</p></td>
+                    <td>
+
+                        <p class="gName">@gall.Gallery_Name</p>
+                    </td>
+                    <td>
+                        <form action="@Url.Action("GalleryDetailsLogedIn", "Home")" method="get">
+                            <input type="hidden" value="@gall.Gallery_Name" name="gName"/>
+                            <input type="submit"  value="Open"/>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="@Url.Action("ChangeGallery", "Home")" method="post">
+                            <input type="hidden" value="@ChangeAction.Up" name="action"/>
+                            <input type="hidden" value="@gall.ID" name="galleryID"/>
+                            <input type="submit"  value="Up"/>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="@Url.Action("ChangeGallery", "Home")" method="post">
+                            <input type="hidden" value="@ChangeAction.Down" name="action"/>
+                            <input type="hidden" value="@gall.ID" name="galleryID"/>
+                            <input type="submit"  value="Down"/>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="@Url.Action("ChangeGallery", "Home")" method="post">
+                            <input type="hidden" value="@ChangeAction.Delete" name="action"/>
+                            <input type="hidden" value="@gall.ID" name="galleryID"/>
+                            <input type="submit"  value="Delete"/>
+                        </form>
+                    </td>
+                </tr>
+
+
+
+            }
+        </table>
+    </div>
+    <div>
+        <form action="@Url.Action("ChangeGallery", "Home")" method="post">
+            <label class="label">Gallery name:</label>
+            <input type="hidden" value="@ChangeAction.Create" name="action"/>
+            <input type="text" value="" name="newGallName"/>
+            <input type="submit" value="Create"/>
+        </form>
+        <form action="Index" method="get">
+            <input type="submit"  value="Log out"/>
+        </form>
+
+    </div>
+</div>
+</body>
+</html>
+
+
+
